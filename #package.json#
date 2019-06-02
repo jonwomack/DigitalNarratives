@@ -10,15 +10,13 @@
     "type": "git",
     "url": "git+https://github.com/womackj1/DigitalNarratives.git"
   },
-  "author": "Jon Womack",
+    "author": "Jon Womack",
+    "dependencies": {
+        
+    }
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/womackj1/DigitalNarratives/issues"
   },
-  "homepage": "https://github.com/womackj1/DigitalNarratives#readme",
-  "dependencies": {
-      "command": "0.0.5",
-      "retext": "6.0.1",
-      
-  }
+  "homepage": "https://github.com/womackj1/DigitalNarratives#readme"
 }
