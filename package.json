@@ -1,0 +1,19 @@
+{
+  "name": "digital-narratives",
+  "version": "1.0.0",
+  "description": "<<<<<<< HEAD ## Welcome to GitHub Pages",
+  "main": "example.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/womackj1/DigitalNarratives.git"
+  },
+  "author": "Jon Womack",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/womackj1/DigitalNarratives/issues"
+  },
+  "homepage": "https://github.com/womackj1/DigitalNarratives#readme"
+}
