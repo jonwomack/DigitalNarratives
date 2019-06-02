@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## Welcome to GitHub Pages
 
 You can use the [editor on GitHub](https://github.com/womackj1/AEL/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
@@ -35,3 +36,7 @@ Your Pages site will use the layout and styles from the Jekyll theme you have se
 ### Support or Contact
 
 Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+=======
+# DigitalNarratives
+Geo-Positioned Narratives
+>>>>>>> b3f4fabac626b7d083855fe0c814f79946b4b99f
