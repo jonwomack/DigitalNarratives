@@ -1,0 +1,50 @@
+@media screen and (min-device-width: 10px) and (max-device-width: 800px) {
+    .login {
+        position: absolute;
+        left: 5%;
+        background-color: white;
+    }
+    .create {
+        position: absolute;
+        left: 55%;
+        background-color: white;
+    }
+    .spinning {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: -3;
+        max-width: 100%;
+    }
+    h1 {
+        position: absolute;
+        color: white;
+        left: 50%;
+    }
+    form {
+        position: absolute;
+        color: white;
+        left: 50%;
+        top: 40%;
+        z-index: 5;
+    }
+    button {
+        position: relative;
+        z-index: 5;
+    }
+    input {
+        position: relative;
+        z-index: 5;
+    }
+    .videoElement {
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        height: 100%;
+        z-index: -10;
+    }
+    #a-scene {
+        position: absolute;
+        z-index: 1;
+    }
+}

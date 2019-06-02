@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html>
+
+
+
+<head>
+    <title>Welcome!</title>
+    <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
+    <script type="text/javascript" src="firebase.js"></script>
+    <script type="text/javascript" src="src/Login/loginPage.js"></script>
+    <link rel="stylesheet" href="src/CSS/mac.css">
+</head>
+
+<body>
+<h1>ARWorld</h1>
+<video  class="spinning" autoplay muted loop="true" id="myVideo">
+</video>
+<script>
+    let vid = document.getElementById("myVideo");
+    if (screen.width > 1200) {
+        vid.innerHTML = `<source src="./earth2.mp4" type="video/mp4">`;
+    } else {
+        vid.innerHTML = `<source src="./earth.mp4" type="video/mp4">`;
+    }
+
+</script>
+
+<form id="form1" method="get">
+    Username:<br>
+    <input type="text" name="username" value="Mickey">
+    <br>
+    Password:<br>
+    <input type="text" name="password" value="Mouse">
+    <br><br>
+    <input class="login" type="button" onclick="loginUser()" value="Login">
+    <input class="create" type="button" onclick="createUser()" value="New User">
+</form>
+<p id="demo"></p>
+
+</body>
+</html>
+
+
+
+
+

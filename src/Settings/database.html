@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
+    <script type="text/javascript" src="../../firebase.js"></script>
+    <script type="text/javascript" src="group.js"></script>
+    <script type="text/javascript" src="switches.js"></script>
+</head>
+<body onload="displayObjects()">
+
+
+
+
+<h2>Create a Group / Add to Group </h2>
+<form id="form1" method="get">
+    Groupname:
+    <input type="text" name="groupname" value="Group Name">
+    <br>
+    <input type="button" onclick="creat
+    eGroup()" value="Group Name">
+    <br>
+    Add User:
+    <input type="text" name="addUser" value="User Name">
+    <br>
+    <input type="button" onclick="addUserToGroup()" value="Add User to Group">
+</form>
+<br>
+<h2>Share Location with Friends</h2>
+<p>Share Location:
+    <label class="switch">
+        <input class="switch-input" type="checkbox" />
+        <span class="switch-label" data-on="Yes" data-off="No"></span>
+        <span class="switch-handle"></span>
+    </label>
+</p>
+<br>
+<h2>Create an AR Object</h2>
+
+<form id="form2" method="get">
+    Object Name:
+    <input type="text" name="objectname" value="Name">
+    <br>
+    Latitude:
+    <input type="text" name="lat" value="33.774577">
+    <br>
+    Longitude:
+    <input type="text" name="lon" value="-84.397340">
+    <br>
+    Altitude (Meters):
+    <input type="text" name="alt" value="286">
+    <br>
+    <div id="demo2">
+    <p id="colorTxt">Color: <input type="text" name="color" value="black"></p>
+    </div>
+    Public:
+    <label class="switch2">
+        <input class="switch-input2" type="checkbox" />
+        <span class="switch-label2" data-on="Yes" data-off="No"></span>
+        <span class="switch-handle2"></span>
+    </label>
+    <br>
+    .glb:
+    <label class="switch3">
+        <input class="switch-input3" type="checkbox" />
+        <span class="switch-label3" data-on="Yes" data-off="No"></span>
+        <span class="switch-handle3"></span>
+    </label>
+    <br>
+    <div id="demo3">
+    </div>
+    <form id="form3" method="get">
+        <div id="av">
+        </div>
+    </form>
+
+    <br>
+    <input type="button" onclick="writeObjectData(isPublic, isGlb)" value="Create Object">
+    <br>
+</form>
+
+
+<br>
+
+<h3>My Objects</h3>
+<ul id="objectList">
+
+</ul>
+<button onclick="goBack()">Back</button>
+<p id="demo"></p>
+
+
+</body>
+</html>

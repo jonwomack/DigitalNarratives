@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen and (min-width: 900px)" href="../CSS/mac.css">
+    <link rel="stylesheet" type="text/css" media="screen and (max-width: 900px)" href="../CSS/phone.css">
+    <script type="text/javascript" src="camera.js"></script>
+    <script type="text/javascript" src="calculations.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
+    <script type="text/javascript" src="../../firebase.js"></script>
+    <script type="text/javascript" src="create.js"></script>
+    <script type="text/javascript" src="example.js"></script>
+</head>
+
+<body>
+<div class="arworld">
+<button onclick="toDatabase()">Settings</button>
+    <br>
+<input id="objName" type="text" name="objectName" value="Object Name">
+    <br>
+<!--<button id="txtButton" onclick="insertObjectTxt()">Text</button>-->
+<input id="insert3" type="text" name="textContent" value="Text">
+<br>
+</div>
+<button onclick="moveForward()">Forward</button>
+<button onclick="moveBackward()">Backward</button>
+<br>
+<input id="myInput" type="text" name="myCountry" placeholder="Topic">
+<button onclick="addTopics()">Add</button>
+<script type="text/javascript" src="dropdown.js"></script>
+<br>
+<svg height="50" width="50">
+</svg>
+<svg height="50" width="50" onclick="moveUp()">
+    <path d="M0 50 L25 0 L50 50 Z" fill="blue"/>
+</svg>
+<br>
+<svg height="50" width="50" onclick="moveLeft()">
+    <path d="M0 25 L50 0 L50 50 Z" fill="blue"/>
+</svg>
+<svg height="50" width="50" onclick="setObject()">
+    <path d="M0 0 L50 0 L50 50 L0 50 Z" fill="green"/>
+</svg>
+<svg height="50" width="50" onclick="moveRight()">
+    <path d="M0 0 L50 25 L0 50 Z" fill="blue"/>
+</svg>
+<br>
+<svg height="50" width="50">
+</svg>
+<svg height="50" width="50" onclick="moveDown()">
+    <path d="M0 0 L25 50 L50 0 Z" fill="blue"/>
+</svg>
+<br>
+<div class="camera">
+    <video  class="videoElement"></video>
+</div>
+<div id="a-scene">
+    <a-scene background="color: black; transparent: true" vr-mode-ui="enabled: false">
+        <a-assets id="assets">
+        </a-assets>
+        <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#93648D"></a-plane>
+        <a-entity id="camera" camera look-controls position="0 1.6 0"></a-entity>
+        <a-sphere id="moving" radius="2.5" position="0 10 0" color="white"></a-sphere>
+    </a-scene>
+</div>
+<p id="demo"></p>
+<p id="hello"></p>
+
+
+<script type="text/javascript" src="position.js"></script>
+
+</body>
+</html>
+

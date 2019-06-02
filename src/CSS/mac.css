@@ -1,0 +1,73 @@
+@media screen and (min-device-width: 1200px) and (max-device-width: 1800px) {
+    .login {
+        position: absolute;
+        left: 5%;
+        background-color: white;
+    }
+    .create {
+        position: absolute;
+        left: 55%;
+        background-color: white;
+    }
+    .spinning {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: -3;
+        max-width: 100%;
+    }
+    h1 {
+        position: absolute;
+        color: white;
+        left: 50%;
+    }
+    form {
+        position: absolute;
+        color: white;
+        left: 50%;
+        top: 40%;
+        z-index: 3;
+    }
+    button {
+        position: relative;
+        z-index: 3;
+        left: 50%;
+    }
+    svg {
+        position: relative;
+        z-index: 3;
+        left: 50%;
+    }
+    input {
+        position: relative;
+        z-index: 3;
+        left: 50%;
+    }
+    .videoElement {
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        z-index: -3;
+    }
+    #a-scene {
+        position: absolute;
+        z-index: -1;
+    }
+    select {
+        position: relative;
+        z-index: 3;
+        left: 50%;
+    }
+    .myInputautocomplete-items {
+        z-index: 10;
+    }
+    strong {
+        position: relative;
+        left: 50%;
+    }
+    font {
+        position: relative;
+        left: 50%;
+    }
+}
