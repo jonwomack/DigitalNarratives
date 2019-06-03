@@ -1,26 +1,19 @@
 var http = require('http'), fs = require('fs');
+var url = require('url');
+var path = require('path');
+var express = require('express');
 
-/*
-http.createServer(function (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.end('Hello World!');
-}).listen(8080);
-*/
-let port = process.env.PORT;
-if (port == null || port == "") {
-  port = 8000;
-}
-fs.readFile('./src/ARWorld/arworld.html', function (err, html) {
-    if (err) {
-        throw err;
-    }
-    http.createServer(function(request, response) {
-        response.writeHeader(200, {"Content-Type": "text/html"});
-        response.write(html);
-        response.end();
-    }).listen(port);
+var app = express();
+app.set('view engine', 'ejs');
+app.use('/home/src/CSS/', express.static('src/CSS'));
+app.use('/', express.static('/'));
+app.get('/home', function (req, res) {
+    res.sendFile(__dirname + '/index.html');
 });
 
+app.listen(3000);
+
+/*
 var retext = require('retext');
 var keywords = require('retext-keywords');
 var toString = require('nlcst-to-string');
@@ -53,3 +46,4 @@ function done(err, file) {
         }
     });
 }
+*/
