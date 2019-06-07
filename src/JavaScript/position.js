@@ -313,7 +313,7 @@ function handleOrientationEvent(compass) {
 }
 
 function toDatabase() {
-    location.assign('../Settings/database.html');
+    location.assign('../database');
 }
 
 

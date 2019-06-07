@@ -149,7 +149,7 @@ function createGroup() {
 
 //Go to Previous page
 function goBack() {
-    location.assign('../ARWorld/arworld.html');
+    location.assign('/arworld');
 }
 
 
