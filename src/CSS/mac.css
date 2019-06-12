@@ -29,9 +29,21 @@
         z-index: 3;
     }
     button {
-        position: relative;
         z-index: 3;
-        left: 50%;
+        position: relative;
+        color: white;
+        background-color: black;
+        border-color: white;
+        font-size: 24px;
+        border-radius: 2px;
+    }
+    button:hover{
+        position: relative;
+        color: black;
+        background-color: white;
+        border-color: white;
+        font-size: 24px;
+        border-radius: 2px;
     }
     svg {
         position: relative;
@@ -70,4 +82,9 @@
         position: relative;
         left: 50%;
     }
+    .indexButtons {
+        position: absolute;
+        top: 50vh;
+    }
+
 }

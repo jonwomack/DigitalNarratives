@@ -13,14 +13,20 @@ app.use(express.static(path.join(__dirname)));
 //app.use('/home/src/JavaScript/', express.static('src/JavaScript'));
 app.use('/CSS/', express.static('src/CSS'));
 app.use('/JavaScript/', express.static('src/JavaScript'));
-app.get('/home', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + '/src/index.html');
 });
-app.get('/arworld', function (req, res) {
-    res.sendFile(__dirname + '/src/arworld.html');
+app.get('/home', function (req, res) {
+    res.sendFile(__dirname + '/src/index.html');
+});
+app.get('/create', function (req, res) {
+    res.sendFile(__dirname + '/src/create.html');
 });
 app.get('/database', function (req, res) {
     res.sendFile(__dirname + '/src/database.html');
+});
+app.get('/engage', function (req, res) {
+   res.sendFile(__dirname + '/src/engage.html')
 });
 app.listen(port);
 
@@ -39,13 +45,10 @@ var keywords = require('retext-keywords');
 var toString = require('nlcst-to-string');
 
 
-var StoryTemplate = 'I am walking to the car. ' +
-    'The car is a ferrari. ' +
-    'I am planning on driving it to work later. ';
-var test1 = 'I am walking to the park.';
-var test2 = 'Car park';
-var test3 = 'car work Ferrari';
-var sentences = [test1, test2, test3];
+var StoryTemplate = 'I parked my ferrari in the lot.';
+var test3 = 'I walked my dog in the lot';
+var sentences = [test3];
+var finalStory = StoryTemplate;
 
 
 var temp = [];
@@ -117,7 +120,12 @@ function nextSentence(sentences, curr, templateKeywords) {
         });
     } else {
         console.log(maxMatches);
+        console.log(templateKeywords);
         console.log(contextSentence);
+        for (var i = 0; i < templateKeywords.length && i < maxMatches.length; i++) {
+            finalStory = finalStory.replace(templateKeywords[i], maxMatches[i]);
+        }
+        console.log(finalStory);
     }
 }
 

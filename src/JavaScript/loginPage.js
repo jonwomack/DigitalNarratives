@@ -49,3 +49,10 @@ function loginUser() {
     });
 }
 
+function toEngage() {
+    location.assign('../engage');
+}
+function toCreate() {
+    location.assign('../create');
+}
+

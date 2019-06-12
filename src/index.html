@@ -6,27 +6,29 @@
 
 <head>
     <title>Welcome!</title>
-    <link rel="stylesheet" href="src/CSS/mac.css">
+    <link rel="stylesheet" href="CSS/mac.css">
     <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
-    <script type="text/javascript" src="src/JavaScript/firebase.js"></script>
-    <script type="text/javascript" src="src/JavaScript/loginPage.js"></script>
+    <script type="text/javascript" src="JavaScript/firebase.js"></script>
+    <script type="text/javascript" src="JavaScript/loginPage.js"></script>
 </head>
 
-<body>
-<h1>ARWorld</h1>
+<div>
+<h1>AR Narrative</h1>
 <video  class="spinning" autoplay muted loop="true" id="myVideo">
 </video>
 <script>
     let vid = document.getElementById("myVideo");
     if (screen.width > 1200) {
-        vid.innerHTML = `<source src="src/CSS/earth2.mp4" type="video/mp4">`;
+        vid.innerHTML = `<source src="CSS/earth2.mp4" type="video/mp4">`;
     } else {
-        vid.innerHTML = `<source src="./earth.mp4" type="video/mp4">`;
+        vid.innerHTML = `<source src="../earth.mp4" type="video/mp4">`;
     }
 
 </script>
 
+<!--
 <form id="form1" method="get">
+
     Username:<br>
     <input type="text" name="username" value="Mickey">
     <br>
@@ -36,6 +38,12 @@
     <input class="login" type="button" onclick="loginUser()" value="Login">
     <input class="create" type="button" onclick="createUser()" value="New User">
 </form>
+-->
+
+<div class="indexButtons">
+    <button onclick="toCreate()">Create</button>
+    <button onclick="toEngage()">Engage</button>
+</div>
 <p id="demo"></p>
 
 </body>
