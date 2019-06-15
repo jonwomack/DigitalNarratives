@@ -44,9 +44,9 @@ async function getLocation() {
 }
 
 function storePosition(position) {
-       currLat = 33.774577;
-       currLon = -84.397340;
-       currAlt = 286;
+    currLat = 33.776493;
+    currLon = -84.400088;
+    currAlt = 291;
 
     /*
     currLat = position.coords.latitude;
@@ -69,8 +69,6 @@ function storePosition(position) {
         initHeading = currHeading;
         init = true;
     }
-
-
 
     currX = 0;
     currZ = 0;
@@ -125,18 +123,10 @@ function placeObjs() {
                 let longitude = snapshot.child(object + '/longitude').val();
                 let altitude = snapshot.child(object + '/altitude').val();
                 let objectCreator = snapshot.child(object + '/username').val();
-                if (snapshot.child(object +'/type').val() === 'glb') {
-                    let fileName = snapshot.child(object + '/fileName').val();
-                    createObjectGlb(latitude, longitude, altitude, fileName, objectCreator, objectName);
-                } else if (snapshot.child(object +'/type').val() === 'basic') {
-                    let color = snapshot.child(object + '/color').val();
-                    createObject(latitude, longitude, altitude, color);
-                } else if (snapshot.child(object +'/type').val() === 'txt') {
-                    let fileName = snapshot.child(object + '/fileName').val();
+                if (snapshot.child(object +'/type').val() === 'txt') {
+                    let fileName = snapshot.child(object + '/text').val();
+                    console.log(fileName);
                     createObjectTxt(latitude, longitude, altitude, fileName);
-                } else if (snapshot.child(object +'/type').val() === 'png') {
-                    let fileName = snapshot.child(object + '/fileName').val();
-                    createObjectPng(latitude, longitude, altitude, fileName, objectCreator, objectName);
                 }
             }
         });
@@ -144,111 +134,6 @@ function placeObjs() {
 }
 placeObjs();
 
-
-
-
-//Places Objects in AR
-
-async function createObject(objLatitude, objLongitude, objAltitude, objColor) {
-    let positioned = await getLocation();
-    if (positioned) {
-        let distance = calculateDistance(currLat, objLatitude, currLon, objLongitude);
-        if (distance < 125000) {
-            let bearing = currHeading + calculateBearing(currLat, objLatitude, currLon, objLongitude);
-            let x = distance * Math.sin(toRadians(bearing));
-            let y = objAltitude;
-            let z = distance * -1 * Math.cos(toRadians(bearing));
-            let el = document.createElement('a-entity');
-            el.setAttribute('geometry', {
-                primitive: 'sphere',
-                radius: 2.5,
-            });
-            el.setAttribute('material', {
-                color: objColor
-            });
-            el.setAttribute('position', {
-                x: x,
-                y: y,
-                z: z
-            });
-            let sceneEl = document.querySelector('a-scene');
-            sceneEl.appendChild(el);
-        }
-    }
-}
-
-async function createObjectGlb(objLatitude, objLongitude, objAltitude, fileName, objectCreator, objName) {
-    let positioned = await getLocation();
-    if (positioned) {
-        let distance = calculateDistance(currLat, objLatitude, currLon, objLongitude);
-        if (distance < 125000) {
-            let url1 = await getFile(fileName, objectCreator, objName);
-            let bearing = currHeading + calculateBearing(currLat, objLatitude, currLon, objLongitude);
-            let x = distance * Math.sin(toRadians(bearing));
-            let y = objAltitude;
-            let z = distance * -1 * Math.cos(toRadians(bearing));
-            let el = document.createElement('a-entity');
-            el.setAttribute('gltf-model', url1);
-            //el.object3D.scale.set(.1, .1, .1);
-            el.setAttribute('position', {
-                x: x,
-                y: y,
-                z: z
-            });
-            let sceneEl = document.querySelector('a-scene');
-            sceneEl.appendChild(el);
-        }
-    }
-}
-
-async function createObjectPng(objLatitude, objLongitude, objAltitude, fileName, objectCreator, objName) {
-    let positioned = await getLocation();
-    if (positioned) {
-        let distance = calculateDistance(currLat, objLatitude, currLon, objLongitude);
-        if (distance < 125000) {
-            let url1 = await getFile(fileName, objectCreator, objName);
-            let bearing = currHeading + calculateBearing(currLat, objLatitude, currLon, objLongitude);
-            let x = distance * Math.sin(toRadians(bearing));
-            let y = objAltitude;
-            let z = distance * -1 * Math.cos(toRadians(bearing));
-            let el = document.createElement('a-entity');
-            let asset = document.getElementById('assets');
-            asset.innerHTML = `<img id="image" src="${url1}">`;
-            el.setAttribute('geometry', {
-                primitive: 'plane',
-            });
-            el.setAttribute('material', {
-                side: 'double',
-                shader: 'flat',
-                src: `#image`
-            });
-            el.setAttribute('position', {
-                x: x,
-                y: y,
-                z: z
-            });
-            let sceneEl = document.querySelector('a-scene');
-            sceneEl.appendChild(el);
-        }
-    }
-}
-async function getFile(fileName, objectCreator, objName) {
-    let url1;
-    let promise = new Promise(resolve => {
-        let exists = false;
-        var storage = firebase.storage();
-        storage.ref('glb').child(`${objectCreator}/${objName}/${fileName}`).getDownloadURL().then(function(url) {
-            url1 = url;
-            exists = true;
-        });
-        setTimeout(() => resolve(exists), 500); // resolve
-    });
-
-    let value = await promise;
-    if (value) {
-        return url1;
-    }
-}
 
 async function createObjectTxt(objLatitude, objLongitude, objAltitude, fileName) {
     let positioned = await getLocation();
@@ -274,11 +159,6 @@ async function createObjectTxt(objLatitude, objLongitude, objAltitude, fileName)
         }
     }
 }
-
-//Collection of functions used in determining position of the user.
-
-
-
 
 
 //Sets current heading as the difference between North and user heading.
@@ -311,13 +191,23 @@ function calculateHeading() {
 function handleOrientationEvent(compass) {
     currHeading = compass;
 }
-
 function toDatabase() {
     location.assign('../database');
 }
-
-
-
-
+function teleport() {
+    let lat = document.getElementById("teleLat").value;
+    let lon = document.getElementById("teleLon").value;
+    let changeInBearing = calculateBearing(lat, currLat, lon, currLon);
+    let changeInXDistance = calculateDistance(lat, currLat, lon, currLon);
+    currX = currX + changeInXDistance * Math.sin(toRadians(changeInBearing));
+    currZ = currZ + changeInXDistance * Math.cos(toRadians(changeInBearing));
+    cam.setAttribute('position', {
+        x: -currX,
+        y: currAlt,
+        z: currZ
+    });
+    currLat = lat;
+    currLon = lon;
+}
 
 

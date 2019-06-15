@@ -1,62 +1,7 @@
 var file;
 //Testing
 
-function insertObject(fileType) {
-    let input;
-    let objectURL;
-    if (fileType === 'glb') {
-        input = document.getElementById("insert");
-        file = input.files[0];
-        objectURL = URL.createObjectURL(file);
-        console.log(objectURL);
-        insertObjectGlb(objectURL);
-    } else if (fileType === 'png') {
-        input = document.getElementById("insert2");
-        file = input.files[0];
-        objectURL = URL.createObjectURL(file);
-        console.log(objectURL);
-        insertObjectPng(objectURL);
-    }
-}
-function insertObjectGlb(objectURL) {
-    let el = document.createElement('a-entity');
-    el.setAttribute('gltf-model', objectURL);
-    el.setAttribute('id', 'moveable');
-    //el.object3D.scale.set(.1, .1, .1);
-    el.setAttribute('position', {
-        x: currX,
-        y: currAlt,
-        z: currZ
-    });
-    el.className += "glb";
-    let sceneEl = document.querySelector('a-scene');
-    sceneEl.appendChild(el);
-    disableInsertButtons();
-}
-function insertObjectPng(objectURL) {
-    let el = document.createElement('a-entity');
-    let asset = document.getElementById('assets');
-    asset.innerHTML = `<img id="image" src="${objectURL}">`;
-    el.setAttribute('geometry', {
-        primitive: 'plane',
-    });
-    el.setAttribute('material', {
-        side: 'double',
-        shader: 'flat',
-        src: `#image`
-    });
-    el.setAttribute('id', 'moveable');
-    //el.object3D.scale.set(.1, .1, .1);
-    el.setAttribute('position', {
-        x: currX,
-        y: currAlt,
-        z: currZ
-    });
-    el.className += "png";
-    let sceneEl = document.querySelector('a-scene');
-    sceneEl.appendChild(el);
-    disableInsertButtons();
-}
+
 function insertObjectTxt() {
     let input = document.getElementById('insert3').value;
     console.log(input);
@@ -105,21 +50,12 @@ async function setObject() {
         let latLon = calcLatLon(bearing, distance);
         let lat = latLon[0];
         let lon = latLon[1];
-
-        if (el.className === 'png') {
-            console.log("Creating PNG");
-            writeObjectDataPng(objName, lat, lon, y, username, true, file.name);
-            createFile(file, objName);
-        } else if (el.className === 'txt') {
+        if (el.className === 'txt') {
             console.log("Creating TXT");
             for (let i = 0; i < objTopics.length; i++) {
                 console.log(objTopics[i]);
             }
             writeObjectDataTxt(objName, lat, lon, y, username, true, document.getElementById('insert3').value, objTopics);
-        } else if (el.className === 'glb') {
-            console.log("Creating GLB");
-            writeObjectDataGlb(objName, lat, lon, y, username, true, file.name);
-            createFile(file, objName);
         }
         //createFile(file, objName);
         //writeObjectDataGlb(objName, currLat, currLon, currAlt, username, true, file.name)
@@ -127,40 +63,6 @@ async function setObject() {
         alert("Object Exists: Change Name");
     }
 
-}
-
-function createFile(file, objName) {
-    if (file != null) {
-        firebase.storage().ref(`glb/${username}/${objName}/${file.name}`).put(file).then(function (snapshot) {
-            console.log('Uploaded a blob or file!');
-        });
-        demo.innerHTML = "File Uploaded";
-    } else {
-        demo.innerHTML = "No File";
-    }
-}
-function writeObjectDataGlb(name, latitude, longitude, altitude, username, pub, fileName) {
-    firebase.database().ref('/objects/' + name).set({
-        longitude: longitude,
-        latitude: latitude,
-        altitude: altitude,
-        username: username,
-        public: pub,
-        type: 'glb',
-        fileName: fileName
-    });
-}
-
-function writeObjectDataPng(name, latitude, longitude, altitude, username, pub, fileName) {
-    firebase.database().ref('/objects/' + name).set({
-        longitude: longitude,
-        latitude: latitude,
-        altitude: altitude,
-        username: username,
-        public: pub,
-        type: 'png',
-        fileName: fileName
-    });
 }
 function writeObjectDataTxt(name, latitude, longitude, altitude, username, pub, fileName, topics) {
     firebase.database().ref('/objects/' + name).set({
@@ -192,13 +94,6 @@ async function objExists(name) {
     let value = await promise;
     return value;
 }
-
-
-
-
-
-
-
 //Functions to move inserted object
 
 function moveLeft() {

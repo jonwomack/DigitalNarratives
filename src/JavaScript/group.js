@@ -55,65 +55,35 @@ async function objExists(name) {
 }
 
 //Creates AR Object
-async function writeObjectData(isPublic, isGlb) {
+async function writeObjectData(isPublic) {
     let x = document.getElementById("form2");
     let input = document.getElementById("avatar");
     let name = x.elements[0].value;
     let lat = x.elements[1].value;
     let lon = x.elements[2].value;
     let alt = x.elements[3].value;
+    let txt = x.elements[4].value;
     let exists = await objExists(name);
     if (!exists) {
-        if (isGlb) {
-            let fileName = input.files[0].name;
-            createFile(name);
-            writeObjectDataGlb(name, lat, lon, alt, username, isPublic, isGlb, fileName);
-        } else {
-            let color = x.elements[4].value;
-            writeObjectDataSphere(name, lat, lon, alt, username, isPublic, isGlb, color);
-        }
+        writeObjectDataTxt(name, lat, lon, alt, username, isPublic, txt);
         setTimeout(function (){window.location.reload(true);}, 3000);
     } else {
         alert("Object Already Exists");
     }
 }
 //A-frame sphere created
-function writeObjectDataSphere(name, latitude, longitude, altitude, username, pub, glb, color) {
+function writeObjectDataTxt(name, latitude, longitude, altitude, username, pub, txt) {
     firebase.database().ref('/objects/' + name).set({
         longitude: longitude,
         latitude: latitude,
         altitude: altitude,
         username: username,
         public: pub,
-        glb: 'basic',
-        color: color
+        type: 'txt',
+        text: txt
     });
 }
-//Glb created
-function writeObjectDataGlb(name, latitude, longitude, altitude, username, pub, glb, fileName) {
-    firebase.database().ref('/objects/' + name).set({
-        longitude: longitude,
-        latitude: latitude,
-        altitude: altitude,
-        username: username,
-        public: pub,
-        type: 'glb',
-        fileName: fileName
-    });
-}
-//Upload Glb file
-function createFile(name) {
-    let input = document.getElementById("avatar");
-    let file = input.files[0];
-    if (file != null) {
-        firebase.storage().ref(`glb/${username}/${name}/${file.name}`).put(file).then(function (snapshot) {
-            console.log('Uploaded a blob or file!');
-        });
-        demo.innerHTML = "File Uploaded";
-    } else {
-        demo.innerHTML = "No File";
-    }
-}
+
 
 
 

@@ -9,16 +9,15 @@ function calculateDistance(lat1, lat2, lon1, lon2) {
     let latlondistance = radius * c;
     return latlondistance;
 }
-
 //Calculates angle between user's location and object's location
 function calculateBearing(latB1, latB2, lonB1, lonB2) {
-    let dLon = (lonB2-lonB1);
-    let y = Math.sin(dLon) * Math.cos(latB2);
-    let x = Math.cos(latB1)*Math.sin(latB2) - Math.sin(latB1)*Math.cos(latB2)*Math.cos(dLon);
+    let dLon = (lonB2 - lonB1);
+    let y = Math.sin(toRadians(dLon))* Math.cos(toRadians(latB2));
+    let x = Math.cos(toRadians(latB1))*Math.sin(toRadians(latB2)) - Math.sin(toRadians(latB1))*Math.cos(toRadians(latB2))*Math.cos(toRadians(dLon));
     let brng = toDegrees((Math.atan2(y, x)));
-    brng = (360 - ((brng + 360) % 360));
     return brng;
 }
+
 
 function calcLatLon(brng, d) {
     //Bearing is converted to radians.

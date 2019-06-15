@@ -37,6 +37,7 @@
         font-size: 24px;
         border-radius: 2px;
     }
+
     button:hover{
         position: relative;
         color: black;
@@ -53,7 +54,6 @@
     input {
         position: relative;
         z-index: 3;
-        left: 50%;
     }
     .videoElement {
         position: absolute;
@@ -64,7 +64,7 @@
     }
     #a-scene {
         position: absolute;
-        z-index: -1;
+        z-index: 0;
     }
     select {
         position: relative;
@@ -85,6 +85,23 @@
     .indexButtons {
         position: absolute;
         top: 50vh;
+    }
+
+    .data {
+        position: relative;
+        color: white;
+    }
+    .data form {
+        position: relative;
+        left: 0%;
+        top: 0%;
+        z-index: 3;
+    }
+    .data input {
+        position: relative;
+        left: 0%;
+        top: 0%;
+        z-index: 3;
     }
 
 }
