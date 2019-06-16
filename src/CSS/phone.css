@@ -1,4 +1,7 @@
-@media screen and (min-device-width: 10px) and (max-device-width: 800px) {
+@media only screen and (min-width: 10px) and (max-width: 800px){
+	body {
+		background-color: black;
+	}
     .login {
         position: absolute;
         left: 5%;
@@ -26,25 +29,82 @@
         color: white;
         left: 50%;
         top: 40%;
-        z-index: 5;
+        z-index: 3;
     }
     button {
+        z-index: 3;
         position: relative;
-        z-index: 5;
+        color: white;
+        background-color: black;
+        border-color: white;
+        font-size: 24px;
+        border-radius: 2px;
+    }
+
+    button:hover{
+        position: relative;
+        color: black;
+        background-color: white;
+        border-color: white;
+        font-size: 24px;
+        border-radius: 2px;
+    }
+    svg {
+        position: relative;
+        z-index: 3;
+        left: 50%;
     }
     input {
         position: relative;
-        z-index: 5;
+        z-index: 3;
     }
     .videoElement {
         position: absolute;
         top: 0%;
         left: 0%;
-        height: 100%;
-        z-index: -10;
+        width: 100%;
+        z-index: -3;
     }
     #a-scene {
         position: absolute;
-        z-index: 1;
+        z-index: 0;
     }
+    select {
+        position: relative;
+        z-index: 3;
+        left: 50%;
+    }
+    .myInputautocomplete-items {
+        z-index: 10;
+    }
+    strong {
+        position: relative;
+        left: 50%;
+    }
+    font {
+        position: relative;
+        left: 50%;
+    }
+    .indexButtons {
+        position: absolute;
+        top: 50vh;
+    }
+
+    .data {
+        position: relative;
+        color: white;
+    }
+    .data form {
+        position: relative;
+        left: 0%;
+        top: 0%;
+        z-index: 3;
+    }
+    .data input {
+        position: relative;
+        left: 0%;
+        top: 0%;
+        z-index: 3;
+    }
+
 }
