@@ -83,10 +83,6 @@ function writeObjectDataTxt(name, latitude, longitude, altitude, username, pub, 
         text: txt
     });
 }
-
-
-
-
 //Creating a Group
 function createGroup() {
     let x = document.getElementById("form1");
@@ -114,9 +110,6 @@ function createGroup() {
         }
     });
 }
-
-
-
 //Go to Previous page
 function goBack() {
     location.assign('/arworld');

@@ -72,7 +72,7 @@ function writeObjectDataTxt(name, latitude, longitude, altitude, username, pub, 
         username: username,
         public: pub,
         type: 'txt',
-        fileName: fileName,
+        text: fileName,
         topics: topics
     });
 }

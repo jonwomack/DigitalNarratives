@@ -1,5 +1,5 @@
 
-var topics = ["Aliens", "Professor", "Expirement", "Spaceship", "Student", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"];
+var topics = ["Aliens", "Professor", "Experiment", "Spaceship", "Student", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"];
 
 autocomplete(document.getElementById("myInput"), topics);
 function autocomplete(inp, arr) {

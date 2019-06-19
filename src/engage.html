@@ -8,7 +8,7 @@
     <script type="text/javascript" src="JavaScript/calculations.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
     <script type="text/javascript" src="JavaScript/firebase.js"></script>
-    <script type="text/javascript" src="example.js"></script>
+    <script type="text/javascript" src="JavaScript/main.js"></script>
 </head>
 
 <body>
@@ -28,19 +28,21 @@
 </div>
 <p id="demo"></p>
 <p id="hello"></p>
-<select>
-    <option value="">1</option>
-    <option value="">2</option>
-    <option value="">3</option>
-    <option value="">4</option>
+<select id="templateType">
+    <option value="0">Zombie</option>
+    <option value="1">2</option>
+    <option value="2">3</option>
+    <option value="3">4</option>
 </select>
-<button>Begin...</button>
+<button onclick="begin()">Begin...</button>
+<button onclick="placeObjs()">Explore</button>
 <br>
 <input id="teleLat" type="text" value="Lat">
 <input id="teleLon" type="text" value="Lon">
 <button onclick="teleport()">Teleport</button>
 
-
+<h1 id="timer">3</h1>
+<h2 id="currNode"></h2>
 
 <script type="text/javascript" src="JavaScript/position.js"></script>
 </body>
