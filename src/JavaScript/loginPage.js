@@ -40,11 +40,12 @@ function loginUser() {
                 loggedin = true;
                 localStorage.setItem("username", usernameDB);
                 localStorage.setItem("password", passwordDB);
-                location.assign('../arworld');
+                document.getElementById("engage").disabled = false;
+                document.getElementById("create").disabled = false;
             }
         });
         if (!loggedin) {
-            demo.innerHTML = "Incorrect Username or Password";
+            alert("Incorrect username or password.")
         }
     });
 }

@@ -26,23 +26,23 @@
 
 </script>
 
-<!--
+
 <form id="form1" method="get">
 
     Username:<br>
-    <input type="text" name="username" value="Mickey">
+    <input type="text" name="username" value="">
     <br>
     Password:<br>
-    <input type="text" name="password" value="Mouse">
+    <input type="text" name="password" value="">
     <br><br>
     <input class="login" type="button" onclick="loginUser()" value="Login">
     <input class="create" type="button" onclick="createUser()" value="New User">
 </form>
--->
 
 <div class="indexButtons">
-    <button onclick="toCreate()">Create</button>
-    <button onclick="toEngage()">Engage</button>
+    <button id="create" disabled="true" onclick="toCreate()">Create</button>
+    <button id="engage" disabled="true" onclick="toEngage()">Engage</button>
+
 </div>
 <p id="demo"></p>
 

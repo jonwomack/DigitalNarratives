@@ -272,9 +272,9 @@ async function begin() {
                     keywords(distanceNode[1]).then(function(result) {
                         distanceNode[2] = result;
                         console.log(currSentence);
-                        console.log("Temp Key:" + currentTemplateKeywords);
+                        console.log("Template Keywords: " + currentTemplateKeywords);
                         console.log(distanceNode[1]);
-                        console.log(distanceNode[2]);
+                        console.log("Distance Keywords: " + distanceNode[2]);
                         let i = 0;
                         while (i < currentTemplateKeywords.length && i < distanceNode[2].length) {
                             currSentence = currSentence.replace(currentTemplateKeywords[i], distanceNode[2][i]);
@@ -292,12 +292,13 @@ async function begin() {
         } else {
             clearInterval(contentInterval);
         }
-    }, 7000);
+    }, 5000);
     /*
     timerInterval = setInterval(function() {
         countDown();
     }, 1000);
     */
+
 
 }
 function countDown() {
@@ -307,10 +308,52 @@ function countDown() {
     }
     if (timer.innerText == -1) {
         //clearInterval(timerInterval);
-        timer.innerText = 20;
+        timer.innerText = 5;
     }
 }
 
+
+function nextNode() {
+        if (template.length > 0) {
+            let currSentence = template.substring(0, template.indexOf(".") + 1);
+            currentTemplateKeywords.length = 0;
+            keywords(currSentence).then(function(result) {
+                result.forEach(function(keyword) {
+                    currentTemplateKeywords.push(keyword);
+                });
+                let objects = firebase.database().ref('objects');
+                objects.once('value').then(function (snapshot) {
+                    snapshot.forEach(function (childSnapshot) {
+                        let object = `${childSnapshot.key}`;
+                        if (snapshot.child(object + '/public').val()) {
+                            let lat = snapshot.child(object + '/latitude').val();
+                            let lon = snapshot.child(object + '/longitude').val();
+                            let distance = calculateDistance(currLat, lat, currLon, lon);
+                            if(distance < distanceNode[0]) {
+                                distanceNode = [distance, snapshot.child(object + '/text').val()];
+
+                            }
+                        }
+                    });
+                    keywords(distanceNode[1]).then(function(result) {
+                        distanceNode[2] = result;
+                        console.log(currSentence);
+                        console.log("Template Keywords: " + currentTemplateKeywords);
+                        console.log(distanceNode[1]);
+                        console.log("Distance Keywords: " + distanceNode[2]);
+                        let i = 0;
+                        while (i < currentTemplateKeywords.length && i < distanceNode[2].length) {
+                            currSentence = currSentence.replace(currentTemplateKeywords[i], distanceNode[2][i]);
+                            i++;
+                        }
+                        document.getElementById("currNode").innerText = currSentence;
+                    });
+                });
+            });
+            template = template.substring(template.indexOf(".") + 1);
+            distanceNode = [Number.MAX_SAFE_INTEGER, "", []];
+        }
+}
 
 
 

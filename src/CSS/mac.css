@@ -24,6 +24,9 @@
         color: white;
         left: 50%;
     }
+    h2 {
+        color: white;
+    }
     form {
         position: absolute;
         color: white;

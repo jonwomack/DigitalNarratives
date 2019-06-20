@@ -82,6 +82,11 @@ function writeObjectDataTxt(name, latitude, longitude, altitude, username, pub, 
         type: 'txt',
         text: txt
     });
+    firebase.database().ref('/numObjects/').child('objects').once('value').then(function(snapshot) {
+        firebase.database().ref('/numObjects/').set({
+            objects: snapshot.val() + 1
+        });
+    });
 }
 //Creating a Group
 function createGroup() {
@@ -235,29 +240,23 @@ function displayObjects() {
         snapshot.forEach( function(childSnapshot) {
                 if(childSnapshot.child('username').val() === username) {
                     let cs = childSnapshot.key.toString();
-                    if (childSnapshot.child('type').val() === 'glb' || childSnapshot.child('type').val() === 'txt') {
-                        let fileName = childSnapshot.child('fileName').val();
-                        list.innerHTML += `<li id='${childSnapshot.key}Item'>${childSnapshot.key} <button onclick='deleteObjectGlb("${cs}", "${fileName}")'>Delete</button></li>`;
-                    } else {
-                        list.innerHTML += `<li id='${childSnapshot.key}Item'>${childSnapshot.key} <button onclick='deleteObject("${cs}")'>Delete</button></li>`;
+                    if (childSnapshot.child('type').val() === 'txt') {
+                        list.innerHTML += `<li id='${childSnapshot.key}Item'>${childSnapshot.key} <button onclick='deleteObjectTxt("${cs}")'>Delete</button></li>`;
                     }
-
                 }
             }
         );
     });
     objList.appendChild(list);
 }
-function deleteObject(object) {
+function deleteObjectTxt(object) {
     document.getElementById("list").removeChild(document.getElementById(`${object}Item`));
     firebase.database().ref(`/objects/${object}`).once('value').then(function (snapshot) {
             firebase.database().ref(`/objects/${object}`).remove();
-    })
-}
-function deleteObjectGlb(object, fileName) {
-    document.getElementById("list").removeChild(document.getElementById(`${object}Item`));
-    firebase.database().ref(`/objects/${object}`).once('value').then(function (snapshot) {
-        firebase.database().ref(`/objects/${object}`).remove();
     });
-    firebase.storage().ref(`/glb/${username}/${object}/${fileName}/`).delete();
+    firebase.database().ref('/numObjects/').child('objects').once('value').then(function(snapshot) {
+        firebase.database().ref('/numObjects/').set({
+            objects: snapshot.val() - 1
+        });
+    });
 }

@@ -27,10 +27,6 @@ function insertObjectTxt() {
 }
 setTimeout(function() {insertObjectTxt();}, 1000);
 
-function disableInsertButtons() {
-    document.getElementById("txtButton").disabled = true;
-}
-
 
 
 async function setObject() {
@@ -51,14 +47,11 @@ async function setObject() {
         let lat = latLon[0];
         let lon = latLon[1];
         if (el.className === 'txt') {
-            console.log("Creating TXT");
             for (let i = 0; i < objTopics.length; i++) {
                 console.log(objTopics[i]);
             }
             writeObjectDataTxt(objName, lat, lon, y, username, true, document.getElementById('insert3').value, objTopics);
         }
-        //createFile(file, objName);
-        //writeObjectDataGlb(objName, currLat, currLon, currAlt, username, true, file.name)
     } else {
         alert("Object Exists: Change Name");
     }
@@ -75,8 +68,12 @@ function writeObjectDataTxt(name, latitude, longitude, altitude, username, pub, 
         text: fileName,
         topics: topics
     });
+    firebase.database().ref('/numObjects/').child('objects').once('value').then(function(snapshot) {
+        firebase.database().ref('/numObjects/').set({
+            objects: snapshot.val() + 1
+        });
+    });
 }
-
 async function objExists(name) {
     let promise = new Promise(resolve => {
         let object = false;
