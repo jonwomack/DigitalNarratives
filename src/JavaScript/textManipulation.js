@@ -2,7 +2,7 @@
 var retext = require('retext');
 var keywords = require('retext-keywords');
 var toString = require('nlcst-to-string');
-
+var brain = require('brain.js');
 
 
 var temp = [];
@@ -52,8 +52,6 @@ function done2(err, file) {
     });
     */
 }
-
-
 function done3(err, file) {
     if (err) throw err
 
@@ -62,6 +60,7 @@ function done3(err, file) {
         keywords.push(toString(keyword.matches[0].node));
         //console.log(toString(keyword.matches[0].node))
     });
+
     keywords.forEach(function (element) {
         kw.push(element);
     });
@@ -100,7 +99,6 @@ function nextSentence(sentences, curr, templateKeywords, finalStory) {
         document.getElementById("currNode").innerText = finalStory;
     }
 }
-
 function compareKeywords(templateKeywords, currKey, currSentence) {
     let matches = 0;
     templateKeywords.forEach(function (elementT) {
@@ -152,5 +150,42 @@ window.keywords = async function(sentence) {
         retext().use(keywords).process(sentence, done3);
         setTimeout(() => resolve(kw), 500);
     });
+
+    const trainingData = [
+        'Little Red Riding Hood is taking food to her sick grandmother.',
+        'Little Red Riding Hood encounters a wolf along the way.',
+        'The wolf tells Red Riding Hood to pick flowers.',
+        'The wolf eats Red Riding Hood’s grandmother.',
+        'The wolf pretends to be the grandmother.',
+        'The wolf eats Red Riding Hood.',
+        'A huntsman finds the wolf in Grandma’s house.',
+        'He cuts open the wolf to save Grandma and Red Riding Hood.',
+        'Red Riding Hood decides to never stray in the forest again.',
+        'laboratory experiment is very fun.',
+        'laboratory experiment is not fun.',
+        'I went to a laboratory experiment one time.',
+        'Jane saw Doug.',
+        'Doug saw Jane.',
+        'Spot saw Doug and Jane looking at each other.',
+        'It was love at first sight, and Spot had a frontrow seat. It was a very special moment for all.'
+
+    ];
+
+    const net = new brain.recurrent.LSTM();
+    net.train(trainingData, {
+        iterations: 1500,
+        errorThresh: 0.011
+    });
+    const run1 = net.run('Jane');
+    const run2 = net.run('Doug');
+    const run3 = net.run('Spot');
+    const run4 = net.run('It');
+    net.maxPredictionLength = 1000;
+    console.log(net.run('laboratory experiment'));
+    console.log('run 1: Jane' + run1);
+    console.log('run 2: Doug' + run2);
+    console.log('run 3: Spot' + run3);
+    console.log('run 4: It' + run4);
+    console.log('run 5: Jane Doug' + net.run('Jane Doug'));
     return await promise;
 }
