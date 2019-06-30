@@ -4,7 +4,6 @@ var keywords = require('retext-keywords');
 var toString = require('nlcst-to-string');
 var brain = require('brain.js');
 
-
 var temp = [];
 var currKey = [];
 var maxMatches = [];
@@ -136,56 +135,59 @@ window.keywords = async function(sentence) {
     while (kw.length > 0) {
         kw.splice(0,1);
     }
-    /*
-    while (currentTemplateKeywords.length > 0) {
-        currentTemplateKeywords.splice(0,1);
-        console.log(currentTemplateKeywords);
-    }
-    while (distanceNode[2].length > 0) {
-        distanceNode[2].splice(0,1);
-        console.log(distanceNode[2]);
-    }
-    */
+
     let promise = new Promise(resolve => {
         retext().use(keywords).process(sentence, done3);
         setTimeout(() => resolve(kw), 500);
     });
-
-    const trainingData = [
-        'Little Red Riding Hood is taking food to her sick grandmother.',
-        'Little Red Riding Hood encounters a wolf along the way.',
-        'The wolf tells Red Riding Hood to pick flowers.',
-        'The wolf eats Red Riding Hood’s grandmother.',
-        'The wolf pretends to be the grandmother.',
-        'The wolf eats Red Riding Hood.',
-        'A huntsman finds the wolf in Grandma’s house.',
-        'He cuts open the wolf to save Grandma and Red Riding Hood.',
-        'Red Riding Hood decides to never stray in the forest again.',
-        'laboratory experiment is very fun.',
-        'laboratory experiment is not fun.',
-        'I went to a laboratory experiment one time.',
-        'Jane saw Doug.',
-        'Doug saw Jane.',
-        'Spot saw Doug and Jane looking at each other.',
-        'It was love at first sight, and Spot had a frontrow seat. It was a very special moment for all.'
-
-    ];
-
-    const net = new brain.recurrent.LSTM();
-    net.train(trainingData, {
-        iterations: 1500,
-        errorThresh: 0.011
-    });
-    const run1 = net.run('Jane');
-    const run2 = net.run('Doug');
-    const run3 = net.run('Spot');
-    const run4 = net.run('It');
-    net.maxPredictionLength = 1000;
-    console.log(net.run('laboratory experiment'));
-    console.log('run 1: Jane' + run1);
-    console.log('run 2: Doug' + run2);
-    console.log('run 3: Spot' + run3);
-    console.log('run 4: It' + run4);
-    console.log('run 5: Jane Doug' + net.run('Jane Doug'));
     return await promise;
+}
+
+
+var network;
+window.run = function(obj) {
+    document.getElementById("currNode").innerText = brain.likely(obj, network);
+}
+window.jsonModel = function(json) {
+    let net = new brain.NeuralNetwork();
+    network = net.fromJSON(json);
+}
+
+
+window.uploadModel = function(modelName) {
+    let net = new brain.NeuralNetwork();
+    net.train([
+        {input: {laboratory: 1, experiment: 1}, output: {black: 1}},
+        {input: {laboratory: 0, experiment: 1}, output: {white: 1}},
+        {input: {laboratory: 0, experiment: 0}, output: {red: 1}},
+        {input: {home: 1, car: 1, wrist: 1}, output: {pink: 1}}
+    ]);
+    let json = net.toJSON();
+    let i;
+    for (i in json['layers'][0]) {
+        json['layers'][0][i] = 0;
+    }
+    let exists = false;
+    let models = firebase.database().ref('/models/');
+    models.once('value').then(function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
+            let modelnameDB = childSnapshot.key;
+            if (modelnameDB === modelName) {
+                exists = true;
+            }
+        });
+        if (!exists) {
+            demo.innerHTML = "Model Created";
+            firebase.database().ref('models/' + modelName).set({
+                json: json
+            });
+            firebase.database().ref('models/' + modelName +'/sentences').set({
+               Blue1: "hello world"
+            });
+        } else {
+            demo.innerHTML = "Model Already Exists";
+        }
+    });
+
+
 }
