@@ -43,8 +43,8 @@ async function getLocation() {
 }
 
 function storePosition(position) {
-    currLat = 33.776493;
-    currLon = -84.400088;
+    currLat = 33.771413;
+    currLon = -84.389291;
     currAlt = 291;
 
     /*
@@ -221,7 +221,7 @@ function begin() {
 
     network = ;
     */
-    //uploadModel("Test");
+    uploadModel("Test");
     /*
     let net2 = new brain.NeuralNetwork().fromJSON(json);
     console.log(brain.likely({laboratory: 1, experiment: 1}, net2));
@@ -258,6 +258,9 @@ function nextNode() {
             });
             let obj = Object.fromEntries(map);
             run(obj);
+        });
+        keywords("Little Red Riding Hood is taking food to her sick grandmother.").then(function(result) {
+            console.log(result);
         });
     });
     distanceNode = [Number.MAX_SAFE_INTEGER, "", []];

@@ -160,7 +160,8 @@ window.uploadModel = function(modelName) {
         {input: {laboratory: 1, experiment: 1}, output: {black: 1}},
         {input: {laboratory: 0, experiment: 1}, output: {white: 1}},
         {input: {laboratory: 0, experiment: 0}, output: {red: 1}},
-        {input: {home: 1, car: 1, wrist: 1}, output: {pink: 1}}
+        {input: {home: 1, car: 1, wrist: 1}, output: {pink: 1}},
+        {input: {Little: 1, Hood: 1, food: 1, grandmother: 1}, output: {one: 1}}
     ]);
     let json = net.toJSON();
     let i;
