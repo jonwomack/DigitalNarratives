@@ -135,7 +135,6 @@ window.keywords = async function(sentence) {
     while (kw.length > 0) {
         kw.splice(0,1);
     }
-
     let promise = new Promise(resolve => {
         retext().use(keywords).process(sentence, done3);
         setTimeout(() => resolve(kw), 500);
@@ -145,24 +144,45 @@ window.keywords = async function(sentence) {
 
 
 var network;
-window.run = function(obj) {
-    document.getElementById("currNode").innerText = brain.likely(obj, network);
+window.run = function(obj, genre) {
+    console.log(obj);
+    let value = brain.likely(obj, network);
+    console.log('models/' + genre + "/sentences/" + value)
+    firebase.database().ref('models/' + genre + "/sentences/" + value).once('value').then(function(sentence) {
+        let content = Object.values(sentence.val())[0];
+        console.log(content);
+        document.getElementById("currNode").innerText = content;
+    });
+
 }
 window.jsonModel = function(json) {
     let net = new brain.NeuralNetwork();
     network = net.fromJSON(json);
 }
+window.grabSentences = function(string) {
+    let sentences = [];
+    while(string.length > 0) {
+        let end = string.indexOf(".");
+        if (end >= 0) {
+            sentences.push(string.substring(0, end + 1));
+            string = string.substring(end + 1);
+        }
+    }
+    return sentences;
+}
 
-
-window.uploadModel = function(modelName) {
+window.uploadModel = function(modelName, trainingInput) {
     let net = new brain.NeuralNetwork();
-    net.train([
-        {input: {laboratory: 1, experiment: 1}, output: {black: 1}},
-        {input: {laboratory: 0, experiment: 1}, output: {white: 1}},
-        {input: {laboratory: 0, experiment: 0}, output: {red: 1}},
-        {input: {home: 1, car: 1, wrist: 1}, output: {pink: 1}},
-        {input: {Little: 1, Hood: 1, food: 1, grandmother: 1}, output: {one: 1}}
-    ]);
+    /*
+    let trainingInput = [
+        {input: {laboratory: 1, experiment: 1}, output: {"1": 1}},
+        {input: {laboratory: 0, experiment: 1}, output: {"4": 1}},
+        {input: {laboratory: 0, experiment: 0}, output: {"2": 1}},
+        {input: {home: 1, car: 1, wrist: 1}, output: {"5": 1}},
+        {input: {Little: 1, Hood: 1, food: 1, grandmother: 1}, output: {"3": 1}}
+    ];
+    */
+    net.train(trainingInput);
     let json = net.toJSON();
     let i;
     for (i in json['layers'][0]) {
@@ -177,18 +197,8 @@ window.uploadModel = function(modelName) {
                 exists = true;
             }
         });
-        if (!exists) {
-            demo.innerHTML = "Model Created";
-            firebase.database().ref('models/' + modelName).set({
-                json: json
-            });
-            firebase.database().ref('models/' + modelName +'/sentences').set({
-               Blue1: "hello world"
-            });
-        } else {
-            demo.innerHTML = "Model Already Exists";
-        }
+        firebase.database().ref('models/' + modelName + '/json').set({
+            json: json
+        });
     });
-
-
 }
