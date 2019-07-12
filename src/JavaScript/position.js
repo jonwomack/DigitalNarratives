@@ -227,13 +227,12 @@ function begin() {
     let net2 = new brain.NeuralNetwork().fromJSON(json);
     console.log(brain.likely({laboratory: 1, experiment: 1}, net2));
     */
-    let sentences = grabSentences("There once was a wizard from the far east." +
-        "He was a wise, old wizard with a long white beard." +
-        "They called him Merlin." +
-        "One day he went into the lake." +
-        "Merlin, the wizard, was buried in a forest."
+    let sentences = grabSentences("It was happening again." +
+        "We all thought the rumors were just rumors." +
+        "We started seeing the UFOs flying through the sky more frequently." +
+        "The aliens left crop circles in the farm behind the forest."
 );
-   aye(0,sentences, genre);
+   //aye(0,sentences, genre);
 
     let models = firebase.database().ref('/models/' + genre + '/json/json');
     models.once('value').then(function(snapshot) {
